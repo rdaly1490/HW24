@@ -5,9 +5,9 @@ Backbone.$ = $;
 module.exports = Backbone.Model.extend({
 	defaults: {
 		_id: null,
-		email: null,
 		username: null,
 		password: null,
-		fullName: null
+		fullName: null,
+		email: null
 	}
 });

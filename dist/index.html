@@ -5,7 +5,32 @@
 </head>
 <body>
 
+<section class="page" id="login-page">
+	<form id="login-form">
+		<input type="text" id="login-username">
+		<input type="password" id="login-password">
+		<button type="submit">Login</button>
+	</form>
+	<a href ="#registration">Not a member? Click here to register!</a>
+</section>
 
+<section class="page" id="registration-page">
+	<form id="registration-form">
+		<label>Username</label><input type="text" id="reg-username">
+		<label>Password</label><input type="text" id="reg-password">
+		<label>Full Name</label><input type="text" id="reg-fullname">
+		<label>Email</label><input type="text" id="reg-email">
+		<button type="submit">Register</button>
+	<a href="#login">Return to Login Page</a>
+	</form>
+</section>
+
+<section class="page" id="home-page">
+	<form id="add-picture-form">
+	<button type="submit">Add Pic</button>
+	<button type="submit" id="logout">Logout</button>
+	</form>
+</section>
 
 <script type="text/javascript" src="scripts/all.js"></script>
 </body>
