@@ -40,17 +40,17 @@
 
 
 <script type="text/template" id="image-row-template">
-	<div class="image-row" date-cid="<%= model.cid %>">
+	<div class="image-row" data-cid="<%= model.cid %>">
 		<img src="<%= model.get('url') %>">
 		<div class="image-caption">
 			<%= model.get("caption") %>
 		</div>
-		<div class="comment-list">
-			<form class="comment-form" data-form-cid="<%= model.cid %>">
-				<input type="text" class="comment-input">
-				<button type="submit">Add Comment</button>
-			</form>
-		</div> 
+		<div class="comment-list"></div>
+		<form class="comment-form" data-form-cid="<%= model.cid %>">
+			<input type="text" class="comment-input">
+			<button type="submit">Add Comment</button>
+		</form>
+	</div>
 </script>
 
 <script type="text/template" id="comment-row-template">

@@ -121,9 +121,9 @@ $(document).ready(function() {
 				imgId: addedImage.get("_id"),
 				text: $(this).find(".comment-input").val()
 			});
-			console.log(commentToAdd);
+			// console.log(commentToAdd);
 			commentList.add(commentToAdd);
-			commentToAdd.save();
+			// commentToAdd.save();
 		});
 	});
 
