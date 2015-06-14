@@ -139,6 +139,15 @@ $(document).ready(function() {
 		myRouter.navigate("login", {trigger: true});
 	});
 
+	$("#submit-image-btn").on("click", function(e) {
+		e.preventDefault();
+		$("#submit-image-form").removeClass("hidden");
+	});
+
+	$("#cancel-submit").on("click", function(e) {
+		e.preventDefault();
+		$("#submit-image-form").addClass("hidden");
+	})
 
 
 

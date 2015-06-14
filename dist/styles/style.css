@@ -1,6 +1,6 @@
-img {
-	height:300px;
-	width:300px;
+#login-bstrap img {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #register-link {
@@ -85,8 +85,81 @@ img {
 	margin-right: auto;
 }
 
+#add-image {
+	height:70px;
+	padding-top:20px;
+}
 
+#submit-image-btn {
+	height:30px;
+	width:20%;
+	border-radius: 5px;
+	background-color: #125688;
+	float:left;
+	color:white;
+}
 
+#logout {
+	height:30px;
+	width:20%;
+	border-radius: 5px;
+	float:right;
+	background-color: white;
+	border: none;
+}
 
+#submit-image-form {
+	height:150px;
+}
 
+#submit-image-form label{
+	display:block;
+	margin-top: 10px;
+}
+
+#submit-image-form input{
+	width:100%;
+	height:30px;
+}
+
+#submit-image{
+	display:block;
+	font-size: 25px;
+	padding:0px;
+	float:right;
+	margin-top: 15px;
+	margin-right: 15px;
+	width:15%;
+	margin-bottom: 20px;
+	height: 40px;
+	border:none;
+	background-color: #66bd2b;
+	color:white;
+}
+
+#cancel-submit{
+	display:block;
+	float:right;
+	margin-top: 15px;
+	margin-right: 15px;
+	width:15%;
+	margin-bottom: 20px;
+	height: 40px;
+	font-size: 25px;
+	border: none;
+	background-color: red;
+	color:white;
+}
+
+.image-row img {
+	max-height:500px;
+	width:100%;
+}
+
+.image-caption {
+	background-color: white;
+	border: 1px solid gray;
+	font-size: 18px;
+	min-height: 100px;
+}
 

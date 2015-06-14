@@ -42,20 +42,28 @@
 </section>
 
 <section class="page" id="home-page">
-	<button type="submit">Dropdown to Add Image</button>
-	<button type="submit" id="logout">Logout</button>
-	<form id="submit-image-form">
-		<input type="text" id="image-url">
-		<input type="text" id="image-caption">
-		<button type="submit">Submit Image</button>
-		<button>Cancel</button>
-	</form>
-	<div id="image-list"></div>
+	<div class="container-fluid">
+		<div class="col-xs-12 col-sm-12 col-md-12" id="add-image">
+			<button id="submit-image-btn">Add Image <span class="glyphicon glyphicon-share"></span></button>
+			<button id="logout">Logout</button>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12" id="dropdown-form">
+			<form class="hidden" id="submit-image-form">
+				<label>URL</label><input type="text" id="image-url">
+				<label>Caption</label><input type="text" id="image-caption">
+				<button type="submit" id="submit-image"><span class="glyphicon glyphicon-ok-circle"></span> Submit</button>
+				<button id="cancel-submit"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+			</form>
+		</div>
+	</div>
+	<div class="container-fluid well">
+		<div id="image-list"></div>
+	</div>
 </section>
 
 
 <script type="text/template" id="image-row-template">
-	<div class="image-row" data-cid="<%= model.cid %>">
+	<div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 image-row" data-cid="<%= model.cid %>">
 		<img src="<%= model.get('url') %>">
 		<div class="image-caption">
 			<%= model.get("caption") %>
