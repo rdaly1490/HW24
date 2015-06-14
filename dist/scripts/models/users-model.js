@@ -9,5 +9,7 @@ module.exports = Backbone.Model.extend({
 		password: null,
 		fullName: null,
 		email: null
-	}
+	},
+	urlRoot:"http://tiny-pizza-server.herokuapp.com/collections/robd-users",
+	idAttribute: "_id"
 });

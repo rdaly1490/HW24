@@ -12642,12 +12642,23 @@ var $ = require("jquery");
 var Backbone = require("backbone");
 Backbone.$ = $;
 
+var imageModel = require("../models/images-model.js");
+
+module.exports = Backbone.Collection.extend({
+	model: imageModel
+});
+},{"../models/images-model.js":7,"backbone":1,"jquery":3}],5:[function(require,module,exports){
+var $ = require("jquery");
+var Backbone = require("backbone");
+Backbone.$ = $;
+
 var userModel = require("../models/users-model.js");
 
 module.exports = Backbone.Collection.extend({
-	model: userModel
+	model: userModel,
+	url: "http://tiny-pizza-server.herokuapp.com/collections/robd-users"
 });
-},{"../models/users-model.js":6,"backbone":1,"jquery":3}],5:[function(require,module,exports){
+},{"../models/users-model.js":8,"backbone":1,"jquery":3}],6:[function(require,module,exports){
 var $ = require("jquery");
 var Backbone = require("backbone");
 Backbone.$ = $;
@@ -12655,85 +12666,125 @@ var _ = require("backbone/node_modules/underscore");
 
 $(document).ready(function() {
 
-var userModel = require("./models/users-model.js");
-var userCollection = require("./collections/users-collection.js");
+	var userModel = require("./models/users-model.js");
+	var userCollection = require("./collections/users-collection.js");
 
-var userList = new userCollection();
+	var imageModel = require("./models/images-model.js");
+	var imageCollection = require("./collections/images-collection.js");
 
-var App = Backbone.Router.extend({
-	routes: {
-		"": "login",
-		"login": "login",
-		"registration": "registration",
-		"home": "home"
-	},
-	login: function() {
-		// console.log("login");
-		$(".page").hide();
-		$("#login-page").show();
-	},
-	registration: function() {
-		// console.log("registration");
-		$(".page").hide();
-		$("#registration-page").show();
-	},
-	home: function() {
-		// console.log("home");
-		$(".page").hide();
-		$("#home-page").show();
-	}
-});
+	var userList = new userCollection();
+	var imageList = new imageCollection();
 
-var myRouter = new App();
-Backbone.history.start();
+	userList.fetch();
 
-
-$("#registration-form").on("submit", function(e) {
-	e.preventDefault();
-
-	var userToAdd = new userModel({
-		username: $("#reg-username").val(),
-		password: $("#reg-password").val(),
-		fullName: $("#reg-fullname").val(),
-		email: $("#reg-email").val()
-	});
-	// console.log(userToAdd);
-	userList.add(userToAdd);
-	console.log(userList.models);
-});
-
-$("#login-form").on("submit", function(e) {
-	e.preventDefault();
-
-	testUsers = _.filter( userList.models, function(item){ 
-	    if (item.attributes.username === $("#login-username").val() && item.attributes.password == $("#login-password").val()){
-	        return item;
-	        console.log(item);
-	    } 
+	var App = Backbone.Router.extend({
+		routes: {
+			"": "login",
+			"login": "login",
+			"registration": "registration",
+			"home": "home"
+		},
+		login: function() {
+			// console.log("login");
+			$(".page").hide();
+			$("#login-page").show();
+		},
+		registration: function() {
+			// console.log("registration");
+			$(".page").hide();
+			$("#registration-page").show();
+		},
+		home: function() {
+			// console.log("home");
+			$(".page").hide();
+			$("#home-page").show();
+		}
 	});
 
-	console.log(testUsers)
+	var myRouter = new App();
+	Backbone.history.start();
 
-	if(testUsers.length > 0) {
-		myRouter.navigate("home", {trigger: true});
+
+	$("#registration-form").on("submit", function(e) {
+		e.preventDefault();
+
+		var userToAdd = new userModel({
+			username: $("#reg-username").val(),
+			password: $("#reg-password").val(),
+			fullName: $("#reg-fullname").val(),
+			email: $("#reg-email").val()
+		});
+		// console.log(userToAdd);
+		userList.add(userToAdd);
+		userToAdd.save();
+
+		myRouter.navigate("login", {trigger: true});
+		// console.log(userList.models);
+	});
+
+	$("#login-form").on("submit", function(e) {
+		e.preventDefault();
+
+		testUsers = _.filter( userList.models, function(item){ 
+		    if (item.attributes.username === $("#login-username").val() && item.attributes.password == $("#login-password").val()){
+		        return item;
+		    } 
+		});
+
+		// console.log(testUsers)
+		// console.log(testUsers[0].cid);
+
+		if(testUsers.length > 0) {
+			myRouter.navigate("home", {trigger: true});
+		}
+		else {
+			console.log("try again");
+		}
+
+		$("#submit-image-form").on("submit", function(e) {
+			e.preventDefault();
+
+			var imageToAdd = new imageModel({
+				userId: testUsers[0].get("_id"),
+				url: $("#image-url").val(),
+				caption: $("#image-caption").val(),
+				numLikes: 0
+			});
+			// console.log(imageToAdd);
+			imageList.add(imageToAdd);
+		});
+
+	});
+
+	$("#logout").on("click", function(e) {
+		myRouter.navigate("login", {trigger: true});
+	});
+
+
+
+
+
+
+
+
+
+
+});
+},{"./collections/images-collection.js":4,"./collections/users-collection.js":5,"./models/images-model.js":7,"./models/users-model.js":8,"backbone":1,"backbone/node_modules/underscore":2,"jquery":3}],7:[function(require,module,exports){
+var $ = require("jquery");
+var Backbone = require("backbone");
+Backbone.$ = $;
+
+module.exports = Backbone.Model.extend({
+	defaults: {
+		_id: null,
+		userId: null,
+		url: null,
+		caption: null,
+		numLikes:0
 	}
-	else {
-		console.log("try again");
-	}
 });
-
-$("#logout").on("click", function(e) {
-	myRouter.navigate("login", {trigger: true});
-});
-
-
-
-
-
-
-
-});
-},{"./collections/users-collection.js":4,"./models/users-model.js":6,"backbone":1,"backbone/node_modules/underscore":2,"jquery":3}],6:[function(require,module,exports){
+},{"backbone":1,"jquery":3}],8:[function(require,module,exports){
 var $ = require("jquery");
 var Backbone = require("backbone");
 Backbone.$ = $;
@@ -12745,6 +12796,8 @@ module.exports = Backbone.Model.extend({
 		password: null,
 		fullName: null,
 		email: null
-	}
+	},
+	urlRoot:"http://tiny-pizza-server.herokuapp.com/collections/robd-users",
+	idAttribute: "_id"
 });
-},{"backbone":1,"jquery":3}]},{},[5]);
+},{"backbone":1,"jquery":3}]},{},[6]);
