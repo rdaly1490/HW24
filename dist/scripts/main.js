@@ -19,6 +19,7 @@ $(document).ready(function() {
 	var commentList = new commentCollection();
 
 	var imageRowBuilder = _.template($("#image-row-template").html());
+	var commentRowBuilder = _.template($("#comment-row-template").html());
 
 	userList.fetch();
 	imageList.fetch({
@@ -115,8 +116,23 @@ $(document).ready(function() {
 			e.preventDefault;
 			$(this).find(".comment-input");
 
-			var commentToAdd = new 
+			var commentToAdd = new commentModel({
+				userId: addedImage.get("userId"),
+				imgId: addedImage.get("_id"),
+				text: $(this).find(".comment-input").val()
+			});
+			console.log(commentToAdd);
+			commentList.add(commentToAdd);
+			commentToAdd.save();
 		});
+	});
+
+	commentList.on("add", function(addedComment) {
+		var commentHtml = commentRowBuilder({model:addedComment});
+		var imagesId = addedComment.get("imgId");
+		var imageModel = imageList.get(imagesId);
+
+		$('[data-cid="'+imageModel.cid+'"] .comment-list').append(commentHtml);
 	});
 
 	$("#logout").on("click", function(e) {
