@@ -76,7 +76,7 @@ $(document).ready(function() {
 	$("#login-form").on("submit", function(e) {
 		e.preventDefault();
 
-		testUsers = _.filter( userList.models, function(item){ 
+		var testUsers = _.filter( userList.models, function(item){ 
 		    if (item.attributes.username === $("#login-username").val() && item.attributes.password == $("#login-password").val()){
 		        return item;
 		    } 
