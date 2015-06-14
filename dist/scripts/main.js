@@ -123,7 +123,7 @@ $(document).ready(function() {
 			});
 			// console.log(commentToAdd);
 			commentList.add(commentToAdd);
-			// commentToAdd.save();
+			commentToAdd.save();
 		});
 	});
 
