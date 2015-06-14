@@ -11,10 +11,21 @@ $(document).ready(function() {
 	var imageModel = require("./models/images-model.js");
 	var imageCollection = require("./collections/images-collection.js");
 
+	var commentModel = require("./models/comments-model.js");
+	var commentCollection = require("./collections/comments-collection.js");
+
 	var userList = new userCollection();
 	var imageList = new imageCollection();
+	var commentList = new commentCollection();
+
+	var imageRowBuilder = _.template($("#image-row-template").html());
 
 	userList.fetch();
+	imageList.fetch({
+		success: function() {
+			commentList.fetch();
+		}
+	});
 
 	var App = Backbone.Router.extend({
 		routes: {
@@ -91,8 +102,21 @@ $(document).ready(function() {
 			});
 			// console.log(imageToAdd);
 			imageList.add(imageToAdd);
+			imageToAdd.save();
 		});
 
+	});
+
+	imageList.on("add", function(addedImage) {
+		var imageHtml = imageRowBuilder({model:addedImage});
+		$("#image-list").append(imageHtml);
+
+		$('[data-form-cid="' + addedImage.cid + '"]').on("submit", function(e) {
+			e.preventDefault;
+			$(this).find(".comment-input");
+
+			var commentToAdd = new 
+		});
 	});
 
 	$("#logout").on("click", function(e) {

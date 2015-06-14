@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>HW24 Instagram Clone</title>
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 <body>
 
@@ -34,7 +35,23 @@
 		<button type="submit">Submit Image</button>
 		<button>Cancel</button>
 	</form>
+	<div id="image-list"></div>
 </section>
+
+
+<script type="text/template" id="image-row-template">
+	<div class="image-row" date-cid="<%= model.cid %>">
+		<img src="<%= model.get('url') %>">
+		<div class="image-caption">
+			<%= model.get("caption") %>
+		</div>
+		<div class="comment-list">
+			<form class="comment-form" data-form-cid="<%= model.cid %>">
+				<input type="text" class="comment-input">
+				<button type="submit">Add Comment</button>
+			</form>
+		</div> 
+</script>
 
 <script type="text/javascript" src="scripts/all.js"></script>
 </body>
