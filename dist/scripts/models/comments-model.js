@@ -6,6 +6,7 @@ module.exports = Backbone.Model.extend({
 	defaults: {
 		_id: null,
 		userId: null,
+		username: null,
 		imgId: null,
 		text: null
 	},

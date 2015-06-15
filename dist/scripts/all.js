@@ -12696,7 +12696,7 @@ $(document).ready(function() {
 
 	userList.fetch();
 	imageList.fetch({
-		success: function() {
+		success: function(imageObj){
 			commentList.fetch();
 		}
 	});
@@ -12728,7 +12728,6 @@ $(document).ready(function() {
 	var myRouter = new App();
 	Backbone.history.start();
 
-
 	$("#registration-form").on("submit", function(e) {
 		e.preventDefault();
 
@@ -12738,12 +12737,11 @@ $(document).ready(function() {
 			fullName: $("#reg-fullname").val(),
 			email: $("#reg-email").val()
 		});
-		// console.log(userToAdd);
+
 		userList.add(userToAdd);
 		userToAdd.save();
 
 		myRouter.navigate("login", {trigger: true});
-		// console.log(userList.models);
 	});
 
 	$("#login-form").on("submit", function(e) {
@@ -12755,11 +12753,9 @@ $(document).ready(function() {
 		    } 
 		});
 
-		// console.log(testUsers)
-		// console.log(testUsers[0].cid);
-
 		if(testUsers.length > 0) {
 			myRouter.navigate("home", {trigger: true});
+			$("#username-history").html(testUsers[0].get("username"));
 		}
 		else {
 			console.log("try again");
@@ -12770,11 +12766,11 @@ $(document).ready(function() {
 
 			var imageToAdd = new imageModel({
 				userId: testUsers[0].get("_id"),
+				username: testUsers[0].get("username"),
 				url: $("#image-url").val(),
 				caption: $("#image-caption").val(),
 				numLikes: 0
 			});
-			// console.log(imageToAdd);
 			imageList.add(imageToAdd);
 			imageToAdd.save();
 		});
@@ -12783,7 +12779,7 @@ $(document).ready(function() {
 
 	imageList.on("add", function(addedImage) {
 		var imageHtml = imageRowBuilder({model:addedImage});
-		$("#image-list").append(imageHtml);
+		$("#image-list").prepend(imageHtml);
 
 		$('[data-form-cid="' + addedImage.cid + '"]').on("submit", function(e) {
 			e.preventDefault;
@@ -12792,9 +12788,10 @@ $(document).ready(function() {
 			var commentToAdd = new commentModel({
 				userId: addedImage.get("userId"),
 				imgId: addedImage.get("_id"),
+				username: addedImage.get("username"),
 				text: $(this).find(".comment-input").val()
 			});
-			// console.log(commentToAdd);
+			console.log(addedImage)
 			commentList.add(commentToAdd);
 			commentToAdd.save();
 		});
@@ -12831,6 +12828,21 @@ $(document).ready(function() {
 
 
 });
+
+// imageBoard.fetch({
+//         success: function(imageObj){
+//             imageObj.forEach(function(model){
+//                 $("#place-image-here").append(imageHolderBuilder(model.attributes));
+//                 $("#place-image-here").fadeIn(3000);
+//             });
+//             imageBoard.on("add", function(image){
+//                 $("#place-image-here").prepend(imageHolderBuilder(image.attributes));
+//                 $("#place-image-here").fadeIn(3000);
+//             });
+
+            
+//         }
+//     });
 },{"./collections/comments-collection.js":4,"./collections/images-collection.js":5,"./collections/users-collection.js":6,"./models/comments-model.js":8,"./models/images-model.js":9,"./models/users-model.js":10,"backbone":1,"backbone/node_modules/underscore":2,"jquery":3}],8:[function(require,module,exports){
 var $ = require("jquery");
 var Backbone = require("backbone");
@@ -12840,6 +12852,7 @@ module.exports = Backbone.Model.extend({
 	defaults: {
 		_id: null,
 		userId: null,
+		username: null,
 		imgId: null,
 		text: null
 	},
@@ -12855,6 +12868,7 @@ module.exports = Backbone.Model.extend({
 	defaults: {
 		_id: null,
 		userId: null,
+		username:null,
 		url: null,
 		caption: null,
 		numLikes:0

@@ -45,6 +45,7 @@
 	<div class="container-fluid">
 		<div class="col-xs-12 col-sm-12 col-md-12" id="add-image">
 			<button id="submit-image-btn">Add Image <span class="glyphicon glyphicon-share"></span></button>
+			<span id="username-history"></span>
 			<button id="logout">Logout</button>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12" id="dropdown-form">
@@ -66,19 +67,19 @@
 	<div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 image-row" data-cid="<%= model.cid %>">
 		<img src="<%= model.get('url') %>">
 		<div class="image-caption">
-			<%= model.get("caption") %>
+			<p><%= model.get("caption") %></p>
 		</div>
 		<div class="comment-list"></div>
 		<form class="comment-form" data-form-cid="<%= model.cid %>">
 			<input type="text" class="comment-input">
-			<button type="submit">Add Comment</button>
+			<button type="submit" class="submit-comment-btn">Add Comment</button>
 		</form>
 	</div>
 </script>
 
 <script type="text/template" id="comment-row-template">
 	<div class="comment-row">
-		<%= model.get("text") %>
+		<div><b><%= model.get("username") + ":" %> </b><%= model.get("text") %></div>
 	</div>
 </script>
 
